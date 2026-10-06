@@ -1,0 +1,59 @@
+import torch
+from torchvision import datasets, transforms
+from torch.utils.data import DataLoader
+
+
+def get_cifar10_loaders(batch_size=64):
+    """
+    Download CIFAR-10 and create training and test DataLoaders.
+    """
+
+    transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize(
+            mean=(0.4914, 0.4822, 0.4465),
+            std=(0.2470, 0.2435, 0.2616)
+        )
+    ])
+
+    train_dataset = datasets.CIFAR10(
+        root="./data",
+        train=True,
+        download=True,
+        transform=transform
+    )
+
+    test_dataset = datasets.CIFAR10(
+        root="./data",
+        train=False,
+        download=True,
+        transform=transform
+    )
+
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=batch_size,
+        shuffle=True,
+        num_workers=0
+    )
+
+    test_loader = DataLoader(
+        test_dataset,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=0
+    )
+
+    return train_loader, test_loader
+
+
+if __name__ == "__main__":
+    train_loader, test_loader = get_cifar10_loaders()
+
+    images, labels = next(iter(train_loader))
+
+    print("Dataset loaded successfully!")
+    print("Training images:", len(train_loader.dataset))
+    print("Test images:", len(test_loader.dataset))
+    print("Batch shape:", images.shape)
+    print("Labels shape:", labels.shape)
