@@ -1,20 +1,13 @@
 import time
-
 import torch
 import torch.nn as nn
 
+from utils.metrics import calculate_accuracy
+
 
 def train_model(model, train_loader, device, epochs=5, learning_rate=0.001):
-    """
-    Train a classification model and return training history.
-    """
-
     criterion = nn.CrossEntropyLoss()
-
-    optimizer = torch.optim.Adam(
-        model.parameters(),
-        lr=learning_rate
-    )
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
     model.to(device)
 
@@ -24,7 +17,6 @@ def train_model(model, train_loader, device, epochs=5, learning_rate=0.001):
     }
 
     for epoch in range(epochs):
-
         model.train()
 
         running_loss = 0.0
@@ -34,7 +26,6 @@ def train_model(model, train_loader, device, epochs=5, learning_rate=0.001):
         start_time = time.time()
 
         for images, labels in train_loader:
-
             images = images.to(device)
             labels = labels.to(device)
 
@@ -45,15 +36,14 @@ def train_model(model, train_loader, device, epochs=5, learning_rate=0.001):
             loss = criterion(outputs, labels)
 
             loss.backward()
-
             optimizer.step()
 
             running_loss += loss.item() * images.size(0)
 
-            _, predicted = torch.max(outputs, 1)
+            predictions = torch.argmax(outputs, dim=1)
 
             total += labels.size(0)
-            correct += (predicted == labels).sum().item()
+            correct += (predictions == labels).sum().item()
 
         epoch_loss = running_loss / total
         epoch_accuracy = 100 * correct / total
@@ -74,34 +64,17 @@ def train_model(model, train_loader, device, epochs=5, learning_rate=0.001):
 
 
 def evaluate_model(model, test_loader, device):
-    """
-    Evaluate the model on the test dataset.
-    """
-
     model.eval()
-
-    correct = 0
-    total = 0
 
     start_time = time.time()
 
-    with torch.no_grad():
-
-        for images, labels in test_loader:
-
-            images = images.to(device)
-            labels = labels.to(device)
-
-            outputs = model(images)
-
-            _, predicted = torch.max(outputs, 1)
-
-            total += labels.size(0)
-            correct += (predicted == labels).sum().item()
+    accuracy = calculate_accuracy(
+        model,
+        test_loader,
+        device
+    )
 
     inference_time = time.time() - start_time
-
-    accuracy = 100 * correct / total
 
     print(f"Test Accuracy: {accuracy:.2f}%")
     print(f"Test inference time: {inference_time:.2f}s")
