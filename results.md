@@ -44,16 +44,16 @@ The representation visualization shows the difference between the spatial featur
 
 | Model | Test Accuracy |
 |-------|---------------|
-| CNN | 64.98% |
-| ViT | 66.72% |
+| CNN | 65.23% |
+| ViT | 64.76% |
 
-The Vision Transformer achieved a test accuracy of 66.72%, while the CNN achieved 64.98%.
+The CNN achieved a test accuracy of 65.23%, while the Vision Transformer achieved 64.76%.
 
-Therefore, the ViT achieved an improvement of:
+Therefore, the difference in test accuracy was:
 
-66.72 - 64.98 = 1.74 percentage points
+65.23 - 64.76 = 0.47 percentage points
 
-The ViT therefore provided slightly better classification performance in this experiment.
+The CNN therefore achieved slightly better classification performance in this experiment.
 
 ---
 
@@ -61,8 +61,8 @@ The ViT therefore provided slightly better classification performance in this ex
 
 | Model | Parameters | Inference Time |
 |-------|------------|----------------|
-| CNN | 94,538 | 7.10 seconds |
-| ViT | 809,098 | 15.78 seconds |
+| CNN | 94,538 | 10.12 seconds |
+| ViT | 809,098 | 23.06 seconds |
 
 The Vision Transformer contains significantly more parameters than the CNN.
 
@@ -70,15 +70,15 @@ Parameter ratio:
 
 809,098 / 94,538 ≈ 8.56
 
-Therefore, the ViT has approximately 8.56 times more parameters.
+Therefore, the ViT has approximately 8.56 times more parameters than the CNN.
 
 The ViT also required more time for inference:
 
-15.78 / 7.10 ≈ 2.22
+23.06 / 10.12 ≈ 2.28
 
-Therefore, the ViT inference time was approximately 2.22 times higher than that of the CNN.
+Therefore, the ViT inference time was approximately 2.28 times higher than that of the CNN.
 
-This indicates that the ViT provided a small accuracy improvement at the cost of substantially higher computational requirements.
+This indicates that the CNN achieved slightly better test accuracy while requiring substantially fewer parameters and less inference time.
 
 ---
 
@@ -90,9 +90,11 @@ The CNN extracts hierarchical local features using convolutional operations. Thi
 
 The ViT divides the image into patches and processes them as tokens using transformer encoder layers. This allows the model to learn relationships between different image patches.
 
-In this experiment, the ViT achieved slightly higher classification accuracy than the CNN. However, the ViT had approximately 8.56 times more parameters and approximately 2.22 times higher inference time.
+In this experiment, the CNN achieved slightly higher test accuracy than the ViT. The CNN achieved 65.23%, while the ViT achieved 64.76%.
 
-Therefore, the results demonstrate a trade-off between classification performance and computational efficiency. The CNN was more computationally efficient, while the ViT achieved slightly better classification performance.
+However, the ViT had approximately 8.56 times more parameters and approximately 2.28 times higher inference time.
+
+Therefore, the results demonstrate a trade-off between classification performance and computational efficiency. For this particular CIFAR-10 experiment, the CNN provided both slightly better test performance and better computational efficiency.
 
 ---
 
@@ -100,6 +102,8 @@ Therefore, the results demonstrate a trade-off between classification performanc
 
 The experiment successfully implemented both a CNN and a Vision Transformer for the same CIFAR-10 image classification task.
 
-The CNN achieved 64.98% test accuracy, while the ViT achieved 66.72%. Although the ViT performed slightly better, it required considerably more computational resources.
+The CNN achieved 65.23% test accuracy, while the ViT achieved 64.76%. Although the difference in accuracy was small, the CNN required considerably fewer computational resources.
 
-The experiment demonstrates that CNNs provide efficient hierarchical image representations, while Vision Transformers use patch-based token representations and can achieve competitive classification performance with greater computational cost.
+The experiment demonstrates that CNNs provide efficient hierarchical image representations through convolutional operations, while Vision Transformers use patch-based token representations and transformer encoder layers.
+
+Overall, under the experimental conditions used in this study, the CNN provided better test performance and computational efficiency than the Vision Transformer.

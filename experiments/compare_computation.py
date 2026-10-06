@@ -6,7 +6,7 @@ def main():
     models = ["CNN", "ViT"]
 
     parameters = [94538, 809098]
-    inference_time = [7.10, 15.78]
+    inference_time = [10.12, 23.06]
 
     # -----------------------------
     # Parameter comparison

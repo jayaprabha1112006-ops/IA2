@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 def main():
 
     models = ["CNN", "ViT"]
-    accuracies = [64.98, 66.72]
+    accuracies = [65.23, 64.76]
 
     plt.figure(figsize=(7, 5))
 
