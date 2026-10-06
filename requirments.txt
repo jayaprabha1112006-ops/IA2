@@ -1,0 +1,8 @@
+torch==2.2.2
+torchvision
+matplotlib
+scikit-learn
+pandas
+seaborn
+tqdm
+jupyter
